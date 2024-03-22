@@ -1,4 +1,4 @@
-package com.tedkvn.erp.enumEntity;
+package com.tedkvn.erp.entity.privilege;
 
 import lombok.Getter;
 

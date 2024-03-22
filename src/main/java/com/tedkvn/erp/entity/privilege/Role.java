@@ -1,6 +1,5 @@
 package com.tedkvn.erp.entity.privilege;
 
-import com.tedkvn.erp.enumEntity.RoleEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
