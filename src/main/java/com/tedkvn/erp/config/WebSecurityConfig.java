@@ -1,8 +1,9 @@
-package com.tedkvn.erp.security;
+package com.tedkvn.erp.config;
 
 
 // Import adjustments for Spring Security 6:
 
+import com.tedkvn.erp.security.AuthEntryPointJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
