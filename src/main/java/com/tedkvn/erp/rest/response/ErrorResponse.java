@@ -1,4 +1,4 @@
-package com.tedkvn.erp.util;
+package com.tedkvn.erp.rest.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

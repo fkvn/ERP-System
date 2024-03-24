@@ -1,7 +1,7 @@
 package com.tedkvn.erp.rest.controllerAdvice;
 
 import com.tedkvn.erp.rest.exception.ResourceNotFoundException;
-import com.tedkvn.erp.util.ErrorResponse;
+import com.tedkvn.erp.rest.response.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;

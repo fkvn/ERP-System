@@ -1,5 +1,6 @@
 package com.tedkvn.erp.logging;
 
+import com.tedkvn.erp.cache.CachedHttpServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
