@@ -42,14 +42,14 @@ public class Store implements Serializable {
 
     @JsonIgnore
     private boolean isDeleted = false; // Soft delete flag
-    
+
     @JsonIgnore
     private LocalDateTime deleteOn; // Timestamp of soft deletion
 
     @ManyToOne
     private Company company;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<UserRole> userRoles = new HashSet<>();
 
 }

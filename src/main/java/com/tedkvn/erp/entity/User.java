@@ -2,6 +2,7 @@ package com.tedkvn.erp.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tedkvn.erp.entity.privilege.UserCompany;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user")
@@ -26,6 +29,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String sub = UUID.randomUUID().toString();
 
     private String username;
 
@@ -49,4 +53,6 @@ public class User implements Serializable {
     @JsonIgnore
     private LocalDateTime deleteOn; // Timestamp of soft deletion
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<UserCompany> companies;
 }

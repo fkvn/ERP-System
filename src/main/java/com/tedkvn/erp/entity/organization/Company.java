@@ -44,11 +44,11 @@ public class Company implements Serializable {
 
     @JsonIgnore
     private boolean isDeleted = false; // Soft delete flag
-    
+
     @JsonIgnore
     private LocalDateTime deleteOn; // Timestamp of soft deletion
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.DETACH)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company", cascade = CascadeType.DETACH)
     private Set<UserCompany> userCompanies; // Users associated with the company
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.DETACH) // One-to-many with Store

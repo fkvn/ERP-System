@@ -1,6 +1,6 @@
 package com.tedkvn.erp.rest.controllerAdvice;
 
-import com.tedkvn.erp.rest.exception.ResourceNotFoundException;
+import com.tedkvn.erp.rest.exception.RestException;
 import com.tedkvn.erp.rest.response.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
@@ -9,14 +9,15 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
-import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -44,20 +45,13 @@ public class GlobalExceptionResolver extends ExceptionHandlerExceptionResolver {
 
         String path = request.getDescription(true).split(";")[0].split("=")[1];
 
-        ErrorResponse errorResponse =
-                new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, resourceName, message, path);
-
-        return errorResponse;
+        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, resourceName, message, path);
     }
 
-    @ExceptionHandler({EmptyResultDataAccessException.class, EntityNotFoundException.class,
-            NullPointerException.class, NoSuchElementException.class,
-            ResourceNotFoundException.class})
-    protected ResponseEntity<ErrorResponse> handleEmptyResultDataAccessException(Exception ex,
-                                                                                 WebRequest request) {
+    @ExceptionHandler(RestException.class)
+    public ResponseEntity<ErrorResponse> handleRestException(RestException ex, WebRequest request) {
         HashMap<String, Object> customFields = new HashMap<>();
-        customFields.put(MESSAGE_KEY, "Resource Not Found");
-        customFields.put(STATUS_KEY, HttpStatus.NOT_FOUND);
+        customFields.put(STATUS_KEY, ex.getStatus());
 
         ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
         return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
@@ -71,11 +65,52 @@ public class GlobalExceptionResolver extends ExceptionHandlerExceptionResolver {
         String message = (String) customFields.get(MESSAGE_KEY);
         HttpStatus status = (HttpStatus) customFields.get(STATUS_KEY);
 
-        Optional.ofNullable(resourceName).ifPresent(v -> errorResponse.setResourceName(v));
-        Optional.ofNullable(message).ifPresent(v -> errorResponse.setMessage(v));
-        Optional.ofNullable(status).ifPresent(v -> errorResponse.setStatus(v));
+        Optional.ofNullable(resourceName).ifPresent(errorResponse::setResourceName);
+        Optional.ofNullable(message).ifPresent(errorResponse::setMessage);
+        Optional.ofNullable(status).ifPresent(errorResponse::setStatus);
 
         return errorResponse;
+    }
+
+    @ExceptionHandler({EmptyResultDataAccessException.class, EntityNotFoundException.class,
+            NullPointerException.class, NoSuchElementException.class,
+            UsernameNotFoundException.class})
+    protected ResponseEntity<ErrorResponse> handleEmptyResultDataAccessException(Exception ex,
+                                                                                 WebRequest request) {
+        HashMap<String, Object> customFields = new HashMap<>();
+        customFields.put(MESSAGE_KEY, "Resource Not Found");
+        customFields.put(STATUS_KEY, HttpStatus.NOT_FOUND);
+
+        ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
+    }
+
+    @ExceptionHandler({ClassCastException.class})
+    protected ResponseEntity<Object> handleBadRequestException(Exception ex, WebRequest request) {
+
+        HashMap<String, Object> customFields = new HashMap<>();
+        customFields.put(STATUS_KEY, HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException ex, WebRequest request) {
+
+        HashMap<String, Object> customFields = new HashMap<>();
+        customFields.put(STATUS_KEY, HttpStatus.BAD_REQUEST);
+
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        List<String> errors = new ArrayList<>();
+        for (FieldError error : fieldErrors) {
+            errors.add(error.getField() + ": " + error.getDefaultMessage());
+        }
+        String message = String.join("; ", errors);  // Join with newlines for readability
+        customFields.put(MESSAGE_KEY, message);
+
+        ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
 
 

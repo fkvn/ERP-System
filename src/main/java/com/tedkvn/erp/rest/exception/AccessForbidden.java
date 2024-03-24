@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @ResponseStatus(HttpStatus.FORBIDDEN)
-public class AccessForbidden extends RuntimeException {
-    
+public class AccessForbidden extends RestException {
+
     public AccessForbidden(String message) {
-        super(isBlank(message) ? "Forbidden Access" : message);
+        super(isBlank(message) ? "Forbidden Access" : message, HttpStatus.FORBIDDEN);
     }
 }

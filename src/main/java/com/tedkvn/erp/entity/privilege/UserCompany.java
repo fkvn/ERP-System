@@ -31,6 +31,6 @@ public class UserCompany implements Serializable {
     @ManyToOne
     private Company company;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserRole> userRoles;
 }
