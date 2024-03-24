@@ -53,4 +53,14 @@ public class WebSecurityConfig {
             }
         };
     }
+
+    //    @Bean
+    //    public WebMvcConfigurer webMvcConfigurer() {
+    //        return new WebMvcConfigurer() {
+    //            @Override
+    //            public void addInterceptors(InterceptorRegistry registry) {
+    //                registry.addInterceptor(new LoggingInterceptor());
+    //            }
+    //        };
+    //    }
 }

@@ -4,6 +4,8 @@ import com.tedkvn.erp.rest.exception.ResourceNotFoundException;
 import com.tedkvn.erp.util.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,7 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-//@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class GlobalExceptionResolver extends ExceptionHandlerExceptionResolver {
 
