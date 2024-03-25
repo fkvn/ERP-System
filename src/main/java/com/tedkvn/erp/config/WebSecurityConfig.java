@@ -15,9 +15,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,6 +28,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // @EnableWebSecurity is no longer needed in Spring security 6
 @EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+
+    // we allow all API calls here and check by using the RequiresAuthentication annotation
     private static final String[] AUTH_WHITELIST =
             {"/api/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
                     "/configuration/security", "/swagger-ui.html", "/webjars/**", "/v3/api-docs/**",
@@ -40,17 +44,17 @@ public class WebSecurityConfig {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
+
         authenticationManagerBuilder.userDetailsService(userDetailsServiceImpl)
                 .passwordEncoder(passwordEncoder());
+
         return authenticationManagerBuilder.build();
     }
 
@@ -71,9 +75,16 @@ public class WebSecurityConfig {
                         (authz) -> authz.requestMatchers(AUTH_WHITELIST).permitAll().anyRequest()
                                 .authenticated());
 
+        http.addFilterBefore(authenticationJwtTokenFilter(),
+                UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
 
     @Bean
     public WebMvcConfigurer corsConfigure() {

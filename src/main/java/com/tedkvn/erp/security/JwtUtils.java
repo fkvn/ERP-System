@@ -1,10 +1,10 @@
 package com.tedkvn.erp.security;
 
+import com.tedkvn.erp.entity.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,14 +19,12 @@ public class JwtUtils {
     @Value("${jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
+    public String generateJwtToken(User user) {
 
         int expirationMs = jwtExpirationMs;
 
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
         // Use the User ID as the signature for JWT Token
-        return Jwts.builder().setSubject((userPrincipal.getId().toString())).setIssuedAt(new Date())
+        return Jwts.builder().setSubject(user.getSub()).setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + expirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }

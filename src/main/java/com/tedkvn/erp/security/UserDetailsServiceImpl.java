@@ -17,12 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String query) throws UsernameNotFoundException {
-        // query could be id, username, phone, or email
-        Optional<User> user = userRepository.findById(Long.valueOf(query));
-        if (user.isEmpty()) user = userRepository.findByUsername(query);
-        if (user.isEmpty()) user = userRepository.findByEmail(query);
-        if (user.isEmpty()) user = userRepository.findByPhone(query);
+    public UserDetails loadUserByUsername(String sub) throws UsernameNotFoundException {
+        // we use sub to identify users
+        Optional<User> user = userRepository.findBySub(sub);
 
         if (user.isEmpty() || user.get().isDeleted())
             throw new UsernameNotFoundException("User not found");

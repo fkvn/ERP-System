@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -93,6 +94,19 @@ public class GlobalExceptionResolver extends ExceptionHandlerExceptionResolver {
         ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
         return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
+
+    @ExceptionHandler({BadCredentialsException.class})
+    protected ResponseEntity<Object> handleBadCredentialsException(Exception ex,
+                                                                   WebRequest request) {
+
+        HashMap<String, Object> customFields = new HashMap<>();
+        customFields.put(MESSAGE_KEY,
+                "Failed to authenticate since no credentials were provided or " +
+                        "credentials and password do not match");
+        ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
+    }
+
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(

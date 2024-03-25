@@ -1,6 +1,5 @@
 package com.tedkvn.erp.rest.request;
 
-import com.tedkvn.erp.annotation.Password;
 import com.tedkvn.erp.annotation.RegionCode;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -16,11 +15,11 @@ public class SignUpRequest {
     @NotBlank(message = "phone number can't be blank")
     private String phone;
 
-    @NotBlank(message = "region can't be blank")
+    @NotBlank(message = "phone region can't be blank")
     @RegionCode
-    private String region;
+    private String phoneRegion;
 
     @NotBlank(message = "password can't be blank")
-    @Password
+    //    @Password
     private String password;
 }

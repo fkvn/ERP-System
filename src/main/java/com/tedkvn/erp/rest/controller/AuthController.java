@@ -1,13 +1,16 @@
 package com.tedkvn.erp.rest.controller;
 
-import com.tedkvn.erp.rest.exception.BadRequest;
+import com.tedkvn.erp.annotation.RequiresAuthentication;
+import com.tedkvn.erp.rest.request.SignInByPassword;
 import com.tedkvn.erp.rest.request.SignUpRequest;
+import com.tedkvn.erp.rest.response.JwtResponse;
 import com.tedkvn.erp.service.user.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.SecureRandom;
+import java.util.Base64;
 
 // 30 secs
 @RestController
@@ -26,10 +29,28 @@ public class AuthController {
     //        return authService.signingWithThaiNowByPhone(request);
     //    }
 
+    @PostMapping("/authz")
+    @RequiresAuthentication
+    public String checkAuthz() {
+        return "Authz";
+    }
+
+    @PostMapping("/secret-base64-key")
+    public String generateBase64EncodedSecretKey(
+            @RequestParam(required = false, defaultValue = "32") int keySize) {
+        byte[] key = new byte[keySize]; // Recommended key size for HMAC-SHA256 and HMAC-SHA512
+        new SecureRandom().nextBytes(key);
+        return Base64.getEncoder().encodeToString(key);
+    }
+
     @PostMapping("/signup")
-    public Long signUpUser(@RequestBody SignUpRequest request) {
-        throw new BadRequest("aaaa");
-        //        return authService.signUpUser(request);
+    public Long signUpUser(@Valid @RequestBody SignUpRequest request) {
+        return authService.signUpUser(request);
+    }
+
+    @PostMapping("/signin-usernameOrEmail")
+    public JwtResponse signInByUsernameOrEmail(@Valid @RequestBody SignInByPassword request) {
+        return authService.signInByUsernameOrEmail(request);
     }
 
 }
