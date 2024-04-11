@@ -16,6 +16,8 @@ public class JwtResponse {
     private String type = "Bearer";
     private Long id;
     private Collection<String> authorities;
+    private String username;
+    private boolean isSuperAdmin;
 
     public JwtResponse(String accessToken) {
         this.access_token = accessToken;
@@ -25,6 +27,8 @@ public class JwtResponse {
         this.access_token = accessToken;
         this.id = userDetails.getId();
         this.authorities = getAuthorities(userDetails.getAuthorities());
+        this.username = userDetails.getUsername();
+        this.isSuperAdmin = userDetails.isSuperAdmin();
     }
 
     private Collection<String> getAuthorities(Collection<? extends GrantedAuthority> authorities) {

@@ -100,9 +100,7 @@ public class GlobalExceptionResolver extends ExceptionHandlerExceptionResolver {
                                                                    WebRequest request) {
 
         HashMap<String, Object> customFields = new HashMap<>();
-        customFields.put(MESSAGE_KEY,
-                "Failed to authenticate since no credentials were provided or " +
-                        "credentials and password do not match");
+        customFields.put(MESSAGE_KEY, "Credentials and password do not match");
         ErrorResponse errorResponse = buildCustomErrorResponse(ex, request, customFields);
         return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }

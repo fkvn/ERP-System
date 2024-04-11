@@ -1,13 +1,13 @@
 package com.tedkvn.erp.rest.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 public class ResourceNotFoundException extends RestException {
 
-    public ResourceNotFoundException() {
-        super("Resource Not Found", HttpStatus.NOT_FOUND);
+    public ResourceNotFoundException(String msg) {
+        super(isBlank(msg) ? "Resource Not Found" : msg, HttpStatus.BAD_REQUEST);
     }
 
 }

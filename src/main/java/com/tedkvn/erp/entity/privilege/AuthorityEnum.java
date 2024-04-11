@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum AuthorityEnum {
-    READ_COMPANY_DATA("Read Company Data"), WRITE_COMPANY_DATA("Write Company Data");
+    ACCESS_COMPANY_DATA("Read Company Data"), WRITE_COMPANY_DATA("Write Company Data");
     private final String description;
 
     AuthorityEnum(String description) {

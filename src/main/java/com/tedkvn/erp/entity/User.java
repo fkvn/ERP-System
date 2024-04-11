@@ -55,4 +55,7 @@ public class User implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<UserCompany> companies;
+
+
+    private boolean isSuperAdmin = false;
 }

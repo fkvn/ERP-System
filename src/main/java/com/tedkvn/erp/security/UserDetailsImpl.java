@@ -66,6 +66,8 @@ public class UserDetailsImpl implements UserDetails {
         return user.getId();
     }
 
+    public boolean isSuperAdmin() {return user.isSuperAdmin();}
+
     // Implement other UserDetails methods (isAccountNonExpired, etc.) based on your logic
 
     // Additional methods to access user information or company details if needed

@@ -2,18 +2,17 @@ package com.tedkvn.erp.service.user;
 
 import com.tedkvn.erp.entity.User;
 import com.tedkvn.erp.rest.exception.BadRequest;
+import com.tedkvn.erp.rest.exception.ResourceNotFoundException;
 import com.tedkvn.erp.rest.request.SignInByPassword;
 import com.tedkvn.erp.rest.request.SignUpRequest;
 import com.tedkvn.erp.rest.response.JwtResponse;
 import com.tedkvn.erp.security.JwtUtils;
 import com.tedkvn.erp.security.UserDetailsImpl;
-import com.tedkvn.erp.util.PhoneUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -44,24 +43,13 @@ public class AuthServiceImpl implements AuthService {
         });
         email.ifPresent(newUser::setEmail);
 
-        String phone = request.getPhone();
-        String phoneRegion = request.getPhoneRegion();
-        userService.findByPhoneAndPhoneRegion(phone, phoneRegion).ifPresent(user -> {
-            if (!user.isDeleted()) {
-                throw new BadRequest("This phone number has been used by another user!");
-            }
-        });
-        if (!PhoneUtil.isPhoneValid(phone, phoneRegion)) throw new BadRequest("Invalid Phone!");
-        newUser.setPhone(phone);
-        newUser.setPhoneRegion(phoneRegion);
-
-        Optional<String> username = Optional.ofNullable(request.getUsername());
-        username.flatMap(u -> userService.findByUsername(u)).ifPresent(user -> {
+        String username = request.getUsername();
+        userService.findByUsername(username).ifPresent(user -> {
             if (!user.isDeleted()) {
                 throw new BadRequest("This username has been used by another user!");
             }
         });
-        username.ifPresent(newUser::setUsername);
+        newUser.setUsername(username);
 
         String password = request.getPassword();
         newUser.setPassword(passwordService.encodePassword(password));
@@ -76,11 +64,10 @@ public class AuthServiceImpl implements AuthService {
         String usernameOrEmail = request.getUsernameOrEmail();
         String password = request.getPassword();
 
-        Optional<User> user = userService.findByUsername(usernameOrEmail);
-        if (user.isEmpty()) user = userService.findByEmail(usernameOrEmail);
+        Optional<User> user = userService.findByUsernameOrEmail(usernameOrEmail);
 
         if (user.isEmpty() || user.get().isDeleted()) {
-            throw new UsernameNotFoundException("User not found");
+            throw new ResourceNotFoundException("User not found");
         }
 
         return signedJWTAuth(user.get(), password);
