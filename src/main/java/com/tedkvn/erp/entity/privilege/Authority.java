@@ -24,7 +24,7 @@ public class Authority implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private AuthorityEnum name;
+    private AuthorityName name;
 
     @ManyToMany // Many-to-many with Role
     private Set<Role> roles; // Roles associated with the authority

@@ -1,6 +1,7 @@
 package com.tedkvn.erp.security;
 
 import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,7 +50,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !user.getStatus().equals(UserStatus.LOCKED);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !user.isDeleted();
+        return !user.getStatus().equals(UserStatus.INACTIVE);
     }
 
     public Long getId() {

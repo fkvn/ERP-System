@@ -15,15 +15,13 @@ import java.util.List;
 @RequestMapping("/api/companies")
 public class CompanyController {
 
-
     @Autowired
     CompanyService companyService;
 
     @GetMapping
     //    @RequiresAuthentication
-    public List<Company> findAccessibleCompanies(@RequestParam Long accessibleTo) {
-        return companyService.findAccessibleCompanies(accessibleTo);
+    public List<Company> findAccessibleCompanies(@RequestParam Long accessibleToUserId) {
+        return companyService.findAccessibleCompanies(accessibleToUserId);
     }
-
-
+    
 }

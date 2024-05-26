@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByIsDeletedFalse();
+    //    List<User> findByIsDeletedFalse();
 
     Optional<User> findByUsername(String username);
 

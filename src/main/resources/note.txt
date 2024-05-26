@@ -1,0 +1,8 @@
+1. We can't inject an EntityManager into an EntityListener (through @PersistenceContext). EntityListener is not managed
+by any of the containers
+
+2. @PersistenceContext class cannot be static. So we cant attain the instance while class loading.
+
+3. EntityListeners are instantiated by JPA, so Spring does not have an opportunity to inject EntityManager
+
+4. To use EntityManager in EntityListener or other Entities, declare and initialize it with BeanUtil class

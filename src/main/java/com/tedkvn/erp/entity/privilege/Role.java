@@ -24,7 +24,7 @@ public class Role implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private RoleEnum name; // Use RoleEnum for strong typing
+    private RoleName name; // Use RoleEnum for strong typing
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles") // Many-to-many with Authority
     private Set<Authority> authorities;

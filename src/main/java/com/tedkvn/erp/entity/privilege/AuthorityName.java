@@ -3,12 +3,11 @@ package com.tedkvn.erp.entity.privilege;
 import lombok.Getter;
 
 @Getter
-public enum RoleEnum {
-    ADMIN("Administrator privileges"), USER("Standard user privileges");
-
+public enum AuthorityName {
+    ACCESS_COMPANY_DATA("Read Company Data"), WRITE_COMPANY_DATA("Write Company Data");
     private final String description;
 
-    RoleEnum(String description) {
+    AuthorityName(String description) {
         this.description = description;
     }
 

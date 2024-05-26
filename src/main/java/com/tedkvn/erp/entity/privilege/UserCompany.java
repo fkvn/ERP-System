@@ -1,5 +1,6 @@
 package com.tedkvn.erp.entity.privilege;
 
+import com.tedkvn.erp.audit.AbstractBasicAuditable;
 import com.tedkvn.erp.entity.User;
 import com.tedkvn.erp.entity.organization.Company;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class UserCompany implements Serializable {
+public class UserCompany extends AbstractBasicAuditable implements Serializable {
 
     @Serial
     private final static long serialVersionUID = 1L;

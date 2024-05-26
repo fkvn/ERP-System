@@ -1,7 +1,7 @@
 package com.tedkvn.erp.repository;
 
 import com.tedkvn.erp.entity.organization.Company;
-import com.tedkvn.erp.entity.privilege.AuthorityEnum;
+import com.tedkvn.erp.entity.privilege.AuthorityName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +18,5 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
             // Access Authority through role
             "AND EXISTS (SELECT 1 FROM ur.role.authorities a WHERE a.name = :authorityName))")
     List<Company> findAccessibleCompanies(Long userId,
-                                          @Param("authorityName") AuthorityEnum authorityName);
+                                          @Param("authorityName") AuthorityName authorityName);
 }

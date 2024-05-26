@@ -1,6 +1,7 @@
 package com.tedkvn.erp.security;
 
 import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.UserStatus;
 import com.tedkvn.erp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // we use sub to identify users
         Optional<User> user = userRepository.findBySub(sub);
 
-        if (user.isEmpty() || user.get().isDeleted())
+        if (user.isEmpty() || user.get().getStatus().equals(UserStatus.INACTIVE))
             throw new UsernameNotFoundException("User not found");
 
         return new UserDetailsImpl(user.get());

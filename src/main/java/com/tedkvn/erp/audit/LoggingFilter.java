@@ -1,6 +1,7 @@
-package com.tedkvn.erp.logging;
+package com.tedkvn.erp.audit;
 
 import com.tedkvn.erp.cache.CachedHttpServletRequest;
+import com.tedkvn.erp.util.Util;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,9 +39,8 @@ public class LoggingFilter extends AbstractRequestLoggingFilter {
         reqBody =
                 IOUtils.toString(cachedHttpServletRequest.getInputStream(), StandardCharsets.UTF_8);
 
-        // remove sensitive information from logging
-        reqBody = reqBody.replaceAll("(?<=,)\\s*\"password\":\\s*\".+?(?=\",\\s*)", "");
-
+        // remove password sensitive information from logging
+        reqBody = Util.redactPassword(reqBody);
         log.info("date={} method={} uri={} query={} payload={} ip={}", new Date(),
                 request.getMethod(), request.getRequestURI(), request.getQueryString(), reqBody,
                 request.getRemoteAddr());

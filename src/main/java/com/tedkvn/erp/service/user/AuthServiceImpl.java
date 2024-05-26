@@ -1,6 +1,7 @@
 package com.tedkvn.erp.service.user;
 
 import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.UserStatus;
 import com.tedkvn.erp.rest.exception.BadRequest;
 import com.tedkvn.erp.rest.exception.ResourceNotFoundException;
 import com.tedkvn.erp.rest.request.SignInByPassword;
@@ -29,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
     @Override
     public Long signUpUser(SignUpRequest request) {
 
@@ -37,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
 
         Optional<String> email = Optional.ofNullable(request.getEmail());
         email.flatMap(e -> userService.findByEmail(email.get())).ifPresent(user -> {
-            if (!user.isDeleted()) {
+            if (!user.getStatus().equals(UserStatus.INACTIVE)) {
                 throw new BadRequest("This email has been used by another user!");
             }
         });
@@ -45,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 
         String username = request.getUsername();
         userService.findByUsername(username).ifPresent(user -> {
-            if (!user.isDeleted()) {
+            if (!user.getStatus().equals(UserStatus.INACTIVE)) {
                 throw new BadRequest("This username has been used by another user!");
             }
         });
@@ -54,6 +56,7 @@ public class AuthServiceImpl implements AuthService {
         String password = request.getPassword();
         newUser.setPassword(passwordService.encodePassword(password));
 
+        newUser.setStatus(UserStatus.ACTIVE);
         newUser = userService.save(newUser);
 
         return newUser.getId();
@@ -66,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
 
         Optional<User> user = userService.findByUsernameOrEmail(usernameOrEmail);
 
-        if (user.isEmpty() || user.get().isDeleted()) {
+        if (user.isEmpty() || user.get().getStatus().equals(UserStatus.INACTIVE)) {
             throw new ResourceNotFoundException("User not found");
         }
 
