@@ -10,7 +10,7 @@ public class SignUpRequest {
     private String email; // Optional
 
     @NotBlank(message = "username can't be blank")
-    private String username; // Optional
+    private String username;
 
 
     @NotBlank(message = "password can't be blank")

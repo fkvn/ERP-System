@@ -4,7 +4,7 @@ import com.tedkvn.erp.annotation.RequiresAuthentication;
 import com.tedkvn.erp.rest.request.SignInByPassword;
 import com.tedkvn.erp.rest.request.SignUpRequest;
 import com.tedkvn.erp.rest.response.JwtResponse;
-import com.tedkvn.erp.service.user.AuthService;
+import com.tedkvn.erp.service.security.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

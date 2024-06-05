@@ -1,4 +1,4 @@
-package com.tedkvn.erp.service.user;
+package com.tedkvn.erp.service.security;
 
 import com.tedkvn.erp.entity.User;
 import com.tedkvn.erp.entity.UserStatus;
@@ -9,6 +9,7 @@ import com.tedkvn.erp.rest.request.SignUpRequest;
 import com.tedkvn.erp.rest.response.JwtResponse;
 import com.tedkvn.erp.security.JwtUtils;
 import com.tedkvn.erp.security.UserDetailsImpl;
+import com.tedkvn.erp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -85,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = new UserDetailsImpl(user);
+        UserDetailsImpl userDetails = new UserDetailsImpl(user, null);
         return new JwtResponse(jwtUtils.generateJwtToken(user), userDetails);
     }
 }

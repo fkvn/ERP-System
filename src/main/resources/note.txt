@@ -6,3 +6,33 @@ by any of the containers
 3. EntityListeners are instantiated by JPA, so Spring does not have an opportunity to inject EntityManager
 
 4. To use EntityManager in EntityListener or other Entities, declare and initialize it with BeanUtil class
+
+5. PreAuthorize Annotation
+
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@PreAuthorize("(" + "#storeId != null && @securityService.isAdminForStore(#storeId)) || " + "(" +
+        "#warehouseId != null && @securityService.isAdminForWarehouse(#warehouseId))")
+public @interface AdminAccess {
+    long storeId() default -1; // Default to -1 if not provided
+    long warehouseId() default -1; // Default to -1 if not provided
+}
+
+* Usage for Store Admin:
+ * @AdminAccess(storeId = 1) // Check for admin access in store with ID 1
+
+* Usage for Warehouse Admin:
+ * @AdminAccess(warehouseId = 2) // Check for admin access in warehouse with ID 2
+
+* Example 1
+ @AdminAccess(storeId = "#storeId") // <-- Apply the annotation here
+ @GetMapping
+ @ResponseStatus(HttpStatus.ACCEPTED)
+ public List<User> findAllUsers(@RequestParam("storeId") long storeId) { return userService.findAllUsers(); }
+
+* Example 2
+ @PostMapping("/{storeId}")
+ @ResponseStatus(HttpStatus.ACCEPTED)
+ @AdminAccess(storeId = "#storeId") // Apply the annotation here
+ public List<User> findAllUsers(@PathVariable long storeId) { return userService.findAllUsers(); }

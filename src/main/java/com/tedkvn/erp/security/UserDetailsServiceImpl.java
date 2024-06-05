@@ -25,6 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user.isEmpty() || user.get().getStatus().equals(UserStatus.INACTIVE))
             throw new UsernameNotFoundException("User not found");
 
-        return new UserDetailsImpl(user.get());
+        return new UserDetailsImpl(user.get(), null);
     }
 }

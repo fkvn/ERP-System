@@ -1,18 +1,16 @@
 package com.tedkvn.erp.entity.organization;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tedkvn.erp.entity.privilege.UserCompany;
+import com.tedkvn.erp.audit.AbstractBasicAuditable;
+import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.listener.CompanyListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,8 +18,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-
-public class Company implements Serializable {
+@EntityListeners(CompanyListener.class)
+public class Company extends AbstractBasicAuditable implements Serializable {
 
     @Serial
     private final static long serialVersionUID = 1L;
@@ -30,30 +28,19 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    // user sequence code
+    private Long companyCode = 000001L;
 
-    private String legalName;
+    private String name = "";
 
-    @CreationTimestamp
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    private LocalDateTime createdOn;
+    private String legalName = "";
 
-    @UpdateTimestamp
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    private LocalDateTime updatedOn;
-
-    @JsonIgnore
-    private boolean isDeleted = false; // Soft delete flag
-
-    @JsonIgnore
-    private LocalDateTime deleteOn; // Timestamp of soft deletion
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company", cascade = CascadeType.DETACH)
-    private Set<UserCompany> userCompanies; // Users associated with the company
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "companies", cascade = CascadeType.DETACH)
+    private Set<User> users = new HashSet<>(); // Users associated with the company
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.DETACH) // One-to-many with Store
-    private Set<Store> stores; // Collection of Stores
+    private Set<Store> stores = new HashSet<>(); // Collection of Stores
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.DETACH) // One-to-many with Warehouse
-    private Set<Warehouse> warehouses; // Collection of Warehouses
+    private Set<Warehouse> warehouses = new HashSet<>(); // Collection of Warehouses
 }

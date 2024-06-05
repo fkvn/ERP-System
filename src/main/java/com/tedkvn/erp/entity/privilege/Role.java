@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,9 +25,9 @@ public class Role implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private RoleName name; // Use RoleEnum for strong typing
+    private RoleName name = null;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles") // Many-to-many with Authority
-    private Set<Authority> authorities;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    private Set<Authority> authorities = new HashSet<>();
 
 }

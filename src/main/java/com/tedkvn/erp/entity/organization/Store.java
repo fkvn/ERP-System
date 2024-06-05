@@ -1,18 +1,14 @@
 package com.tedkvn.erp.entity.organization;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tedkvn.erp.audit.AbstractBasicAuditable;
 import com.tedkvn.erp.entity.privilege.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class Store implements Serializable {
+public class Store extends AbstractBasicAuditable implements Serializable {
 
     @Serial
     private final static long serialVersionUID = 1L;
@@ -30,24 +26,10 @@ public class Store implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
-    @CreationTimestamp
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    private LocalDateTime createdOn;
-
-    @UpdateTimestamp
-    @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
-    private LocalDateTime updatedOn;
-
-    @JsonIgnore
-    private boolean isDeleted = false; // Soft delete flag
-
-    @JsonIgnore
-    private LocalDateTime deleteOn; // Timestamp of soft deletion
+    private String name = "";
 
     @ManyToOne
-    private Company company;
+    private Company company = null;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<UserRole> userRoles = new HashSet<>();

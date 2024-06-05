@@ -21,4 +21,6 @@ public class UserController {
     public List<User> findAllUsers(@Valid @RequestBody SignUpRequest req) {
         return userService.findAllUsers();
     }
+
+    
 }

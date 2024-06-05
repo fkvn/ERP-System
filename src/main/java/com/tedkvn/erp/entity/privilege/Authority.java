@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,8 +25,8 @@ public class Authority implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private AuthorityName name;
+    private AuthorityName name = null;
 
     @ManyToMany // Many-to-many with Role
-    private Set<Role> roles; // Roles associated with the authority
+    private Set<Role> roles = new HashSet<>(); // Roles associated with the authority
 }

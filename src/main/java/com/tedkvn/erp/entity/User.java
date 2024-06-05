@@ -2,7 +2,8 @@ package com.tedkvn.erp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tedkvn.erp.audit.AbstractBasicAuditable;
-import com.tedkvn.erp.entity.privilege.UserCompany;
+import com.tedkvn.erp.entity.organization.Company;
+import com.tedkvn.erp.entity.privilege.UserRole;
 import com.tedkvn.erp.listener.UserListener;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,8 +12,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
@@ -36,20 +36,23 @@ public class User extends AbstractBasicAuditable implements Serializable {
     private Long userCode;
 
     @JsonIgnore
-    private String password;
+    private String password = "";
 
-    private String username;
-    private String fullName;
-    private String email;
-    private String phone;
-    private String phoneRegion;
-    private String note;
+    private String username = "";
+    private String fullName = "";
+    private String email = "";
+    private String phone = "";
+    private String phoneRegion = "US";
+    private String note = "";
 
     @Enumerated(EnumType.STRING)
-    private UserStatus status;
+    private UserStatus status = UserStatus.ACTIVE;
 
     private boolean isSuperAdmin = false;
-    
+
+    @ManyToMany
+    private Set<Company> companies = new HashSet<>();
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private List<UserCompany> companies;
+    private List<UserRole> userRoles = new ArrayList<>();
 }
