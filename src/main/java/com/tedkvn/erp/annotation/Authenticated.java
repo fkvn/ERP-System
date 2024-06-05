@@ -10,4 +10,4 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("isAuthenticated()")
-public @interface RequiresAuthentication {}
+public @interface Authenticated {}

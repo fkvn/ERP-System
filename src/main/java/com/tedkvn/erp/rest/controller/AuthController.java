@@ -1,6 +1,6 @@
 package com.tedkvn.erp.rest.controller;
 
-import com.tedkvn.erp.annotation.RequiresAuthentication;
+import com.tedkvn.erp.annotation.Authenticated;
 import com.tedkvn.erp.rest.request.SignInByPassword;
 import com.tedkvn.erp.rest.request.SignUpRequest;
 import com.tedkvn.erp.rest.response.JwtResponse;
@@ -30,7 +30,7 @@ public class AuthController {
     //    }
 
     @PostMapping("/authz")
-    @RequiresAuthentication
+    @Authenticated
     public String checkAuthz() {
         return "Authz";
     }
