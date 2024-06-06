@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tedkvn.erp.audit.AbstractBasicAuditable;
 import com.tedkvn.erp.entity.organization.Company;
 import com.tedkvn.erp.entity.privilege.UserRole;
+import com.tedkvn.erp.listener.UserList ener;
 import com.tedkvn.erp.listener.UserListener;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,6 +22,7 @@ import java.util.*;
 @Setter
 @ToString
 @EntityListeners(UserListener.class)
+@Indexed
 public class User extends AbstractBasicAuditable implements Serializable {
 
     @Serial

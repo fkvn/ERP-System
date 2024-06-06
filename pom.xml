@@ -16,8 +16,17 @@
     <properties>
         <java.version>21</java.version>
         <jakarta-persistence.version>3.1.0</jakarta-persistence.version>
+        <hibernate.version>6.1.5.Final</hibernate.version>
+        <!--        <hibernate.version>5.6.10.Final</hibernate.version>-->
+        <!--        <elasticsearch.version>7.15.2</elasticsearch.version>-->
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -139,23 +148,30 @@
             <artifactId>jakarta.annotation-api</artifactId>
             <version>2.1.1</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>jakarta.persistence</groupId>-->
-        <!--            <artifactId>jakarta.persistence-api</artifactId>-->
-        <!--            <version>3.1.0</version>-->
-        <!--        </dependency>-->
 
+        <!--         hibernate fulltextsearch -->
         <!--        <dependency>-->
-        <!--            <groupId>org.hibernate</groupId>-->
-        <!--            <artifactId>hibernate-core</artifactId>-->
-        <!--            <version>5.6.10.Final</version>-->
+        <!--            <groupId>org.hibernate.search</groupId>-->
+        <!--            <artifactId>hibernate-search-mapper-orm</artifactId>-->
+        <!--            <version>${hibernate.version}</version>-->
         <!--        </dependency>-->
-
+        <!--        &lt;!&ndash; hibernate elastic &ndash;&gt;-->
         <!--        <dependency>-->
-        <!--            <groupId>jakarta.persistence</groupId>-->
-        <!--            <artifactId>jakarta.persistence-api</artifactId>-->
-        <!--            <version>3.1.0</version>-->
+        <!--            <groupId>org.hibernate.search</groupId>-->
+        <!--            <artifactId>hibernate-search-backend-elasticsearch</artifactId>-->
+        <!--            <version>6.1.5.Final</version>-->
         <!--        </dependency>-->
+        <!-- hibernate lucene -->
+        <dependency>
+            <groupId>org.hibernate.search</groupId>
+            <artifactId>hibernate-search-backend-lucene</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.search</groupId>
+            <artifactId>hibernate-search-mapper-orm-orm6</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 
     </dependencies>
 
