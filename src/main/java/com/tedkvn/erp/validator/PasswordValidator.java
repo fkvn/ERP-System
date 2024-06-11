@@ -1,6 +1,6 @@
 package com.tedkvn.erp.validator;
 
-import com.tedkvn.erp.annotation.Password;
+import com.tedkvn.erp.annotation.IsValidatedPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-public class PasswordValidator implements ConstraintValidator<Password, String> {
+public class PasswordValidator implements ConstraintValidator<IsValidatedPassword, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

@@ -9,6 +9,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 import java.time.LocalDateTime;
 
@@ -16,19 +20,24 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EntityListeners(BasicAuditListener.class)
+@Indexed
 public abstract class AbstractBasicAuditable {
 
-    private String createdBy = "anonymousUser";
+    @FullTextField
+    private String createdBy = "";
 
     @CreationTimestamp
     @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
+    @GenericField(sortable = Sortable.YES)
     private LocalDateTime createdOn;
 
+    @FullTextField
     @Column(insertable = false) // won't be triggered for creation.
-    private String updatedBy = "anonymousUser";
+    private String updatedBy = "";
 
     @Column(insertable = false) // won't be triggered for creation.
     @UpdateTimestamp
     @JsonFormat(pattern = "MM-dd-yyyy HH:mm:ss")
+    @GenericField(sortable = Sortable.YES)
     private LocalDateTime updatedOn;
 }

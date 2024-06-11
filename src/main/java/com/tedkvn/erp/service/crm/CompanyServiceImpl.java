@@ -26,11 +26,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Long createCompany(CompanyRequest request) {
-
         Company newCompany = new Company();
         newCompany.setName(request.getName());
         newCompany.setLegalName(request.getLegalName());
-
         return companyRepository.save(newCompany).getId();
     }
 }

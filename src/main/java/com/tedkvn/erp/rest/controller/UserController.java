@@ -1,14 +1,14 @@
 package com.tedkvn.erp.rest.controller;
 
-import com.tedkvn.erp.annotation.SuperAdmin;
-import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.annotation.IsSuperAdmin;
+import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.repository.UserRepository;
+import com.tedkvn.erp.rest.response.SearchResponse;
+import com.tedkvn.erp.service.search.SearchService;
 import com.tedkvn.erp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,10 +18,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SearchService searchService;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @SuperAdmin
-    public List<User> findAllUsers() {
-        return userService.findAllUsers();
+    @IsSuperAdmin
+    //       keywords: Username, full name, email, phone number
+    //       filter: status, company
+    public SearchResponse<?> findAllUsers(
+            @RequestParam(required = true, defaultValue = "") String keywords,
+            @RequestParam(required = false) List<UserStatus> status,
+            @RequestParam(defaultValue = "createdOn") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortByOrder,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int limit) {
+
+        return searchService.searchUser(keywords, limit, page, sortBy, sortByOrder, status);
     }
+    //    public List<User> finaAllUsers() {
+    //        return userRepository.findAll();
+    //    }
 }

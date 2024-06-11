@@ -1,6 +1,6 @@
 package com.tedkvn.erp.annotation;
 
-import com.tedkvn.erp.validator.RegionCodeValidator;
+import com.tedkvn.erp.validator.PasswordValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -12,11 +12,11 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = RegionCodeValidator.class)
+@Constraint(validatedBy = PasswordValidator.class)
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
-public @interface RegionCode {
-    String message() default "Phone Region must be a valid 2-digit code";
+public @interface IsValidatedPassword {
+    String message() default "8 to 20 characters (1 upper, 1 lower, 1 number, and no white space)";
 
     Class<?>[] groups() default {};
 

@@ -7,5 +7,5 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-@PreAuthorize("@authenticatedService.isSuperAdmin()")
-public @interface SuperAdmin {}
+@PreAuthorize("@authorityService.isSuperAdmin()")
+public @interface IsSuperAdmin {}
