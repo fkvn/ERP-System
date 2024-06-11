@@ -22,8 +22,7 @@ public class SearchDaoImpl implements SearchDao {
     //
     @Autowired
     private EntityManager entityManager;
-
-
+    
     @Override
     public SearchResult<User> searchUser(String keywords, int limit, int page, String sortBy,
                                          String sortByOrder, List<UserStatus> status) {
@@ -36,8 +35,8 @@ public class SearchDaoImpl implements SearchDao {
 
         return searchSession.search(User.class).where(f -> f.bool(b -> {
 
-            if (!keywords.isEmpty()) {
-                b.must(f.phrase().field("username").boost(3.0f).field("username").boost(2.0f)
+            if (keywords != null && keywords.isEmpty()) {
+                b.must(f.phrase().field("userCode").boost(3.0f).field("username").boost(2.0f)
                         .field("fullName").boost(1.0f).field("email").boost(1.0f).field("phone")
                         .boost(1.0f).matching(keywords));
             }
