@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String sub) throws UsernameNotFoundException {
-        // we use sub to identify users
+        // we use sub to identify users -> make sure signedJWT created by sub
         Optional<User> user = userRepository.findBySub(sub);
 
         if (user.isEmpty() || user.get().getStatus().equals(UserStatus.INACTIVE))

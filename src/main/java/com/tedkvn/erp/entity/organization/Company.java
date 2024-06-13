@@ -29,7 +29,7 @@ public class Company extends AbstractBasicAuditable implements Serializable {
     private Long id;
 
     // user sequence code
-    private Long companyCode = 000001L;
+    private String companyCode = "";
 
     private String name = "";
 

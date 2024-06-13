@@ -1,5 +1,6 @@
 package com.tedkvn.erp.entity.privilege;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -12,8 +13,12 @@ public enum RoleName {
         this.description = description;
     }
 
+    @JsonValue
+    public String toString() {
+        return getName() + "|" + getDescription();
+    }
+
     public String getName() {
         return name();
     }
-
 }

@@ -34,6 +34,7 @@ public class User extends AbstractBasicAuditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericField(sortable = Sortable.YES)
     private Long id;
 
     // Sub is used to generate and authenticate JWT Token
@@ -42,7 +43,7 @@ public class User extends AbstractBasicAuditable implements Serializable {
 
     // user sequence code
     @GenericField(sortable = Sortable.YES)
-    private Long userCode;
+    private String userCode;
 
     @JsonIgnore
     private String password = "";
