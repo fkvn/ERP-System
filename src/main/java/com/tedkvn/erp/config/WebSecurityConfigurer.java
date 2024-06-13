@@ -27,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 // @EnableWebSecurity is no longer needed in Spring security 6
 @EnableMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig {
+public class WebSecurityConfigurer {
 
     // we allow all API calls here and check by using the RequiresAuthentication annotation
     private static final String[] AUTH_WHITELIST =

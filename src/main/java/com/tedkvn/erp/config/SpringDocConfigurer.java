@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SpringDocConfig {
+public class SpringDocConfigurer {
     @Bean
     public GroupedOpenApi httpApi() {
         return GroupedOpenApi.builder().group("http").pathsToMatch("/**").build();

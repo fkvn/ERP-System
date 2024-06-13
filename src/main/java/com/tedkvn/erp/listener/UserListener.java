@@ -1,5 +1,6 @@
 package com.tedkvn.erp.listener;
 
+import com.tedkvn.erp.config.AbstractInitSequenceBuild;
 import com.tedkvn.erp.entity.User;
 import com.tedkvn.erp.util.DbUtil;
 import jakarta.persistence.PrePersist;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class UserListener {
+public class UserListener extends AbstractInitSequenceBuild {
 
     @PrePersist
     public void beforeCreateUser(User user) {
@@ -22,5 +23,10 @@ public class UserListener {
 
         // Update the sequence value in the database
         DbUtil.updateSequence(nextValue, User.class);
+    }
+
+    @Override
+    protected Class<?> getSpecificClass() {
+        return User.class;
     }
 }
