@@ -28,7 +28,7 @@ public class Company extends AbstractBasicAuditable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // user sequence code
+    // sequence code -> auto-generated via the EntityListener
     private String companyCode = "";
 
     private String name = "";

@@ -39,7 +39,5 @@ public class UserController {
 
         return searchService.searchUser(keywords, limit, page, sortBy, sortByOrder, status);
     }
-    //    public List<User> finaAllUsers() {
-    //        return userRepository.findAll();
-    //    }
+
 }

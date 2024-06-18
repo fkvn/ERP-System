@@ -25,7 +25,6 @@ import java.util.*;
 @Setter
 @ToString
 @EntityListeners(UserListener.class)
-//@DiscriminatorValue("JOB_POST")
 @Indexed
 public class User extends AbstractBasicAuditable implements Serializable {
 
@@ -41,7 +40,7 @@ public class User extends AbstractBasicAuditable implements Serializable {
     @JsonIgnore
     private String sub = UUID.randomUUID().toString();
 
-    // user sequence code
+    // sequence code -> auto-generated via the EntityListener
     @GenericField(sortable = Sortable.YES)
     private String userCode;
 
