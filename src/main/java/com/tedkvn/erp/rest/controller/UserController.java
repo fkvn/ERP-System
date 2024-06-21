@@ -24,6 +24,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
     @IsSuperAdmin
@@ -39,5 +40,11 @@ public class UserController {
 
         return searchService.searchUser(keywords, limit, page, sortBy, sortByOrder, status);
     }
+
+    @GetMapping("/status")
+    public List<UserStatus> findUserStatusAll() {
+        return List.of(UserStatus.class.getEnumConstants());
+    }
+
 
 }
