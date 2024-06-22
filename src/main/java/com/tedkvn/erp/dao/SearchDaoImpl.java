@@ -49,7 +49,7 @@ public class SearchDaoImpl implements SearchDao {
             FieldSortOptionsStep<?, ? extends SearchPredicateFactory> field = null;
             switch (sortBy) {
                 case "createdOn": {
-                    field = f.field("createdOn");
+                    field = f.field("createdOn").order(SortOrder.ASC).then().field();
                     break;
                 }
                 case "updatedOn": {

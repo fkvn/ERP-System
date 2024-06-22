@@ -6,6 +6,7 @@ import com.tedkvn.erp.repository.UserRepository;
 import com.tedkvn.erp.rest.response.SearchResponse;
 import com.tedkvn.erp.service.search.SearchService;
 import com.tedkvn.erp.service.user.UserService;
+import org.hibernate.search.engine.search.sort.dsl.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,8 +34,8 @@ public class UserController {
     public SearchResponse<?> findAllUsers(
             @RequestParam(required = true, defaultValue = "") String keywords,
             @RequestParam(required = false) List<UserStatus> status,
-            @RequestParam(defaultValue = "createdOn") String sortBy,
-            @RequestParam(defaultValue = "desc") String sortByOrder,
+            @RequestParam(required = false) List<String> sortBy,
+            @RequestParam(required = false) List<SortOrder> sortByOrder,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int limit) {
 
