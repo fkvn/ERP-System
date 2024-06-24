@@ -52,7 +52,7 @@ public class User extends AbstractBasicAuditable implements Serializable {
 
     @FullTextField
     private String fullName = "";
-    @FullTextField
+    @GenericField(sortable = Sortable.YES)
     private String email = "";
     @FullTextField
     private String phone = "";

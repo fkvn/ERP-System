@@ -5,6 +5,7 @@ import com.tedkvn.erp.entity.User;
 import com.tedkvn.erp.entity.UserStatus;
 import com.tedkvn.erp.rest.response.SearchResponse;
 import org.hibernate.search.engine.search.query.SearchResult;
+import org.hibernate.search.engine.search.sort.dsl.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,10 @@ public class SearchServiceImpl implements SearchService {
     private SearchDao searchDao;
 
     @Override
-    public SearchResponse<?> searchUser(String keywords, int limit, int page, String sortBy,
-                                        String sortByOrder, List<UserStatus> status) {
+    public SearchResponse<?> searchUser(String keywords, int limit, int page, List<String> sortBy,
+                                        List<SortOrder> sortOrder, List<UserStatus> status) {
         SearchResult<User> result =
-                searchDao.searchUser(keywords, limit, page, sortBy, sortByOrder, status);
+                searchDao.searchUser(keywords, limit, page, sortBy, sortOrder, status);
 
         SearchResponse<User> searchRes = new SearchResponse<>();
         searchRes.setTotalCount(result.total().hitCount());

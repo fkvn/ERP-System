@@ -35,11 +35,11 @@ public class UserController {
             @RequestParam(required = true, defaultValue = "") String keywords,
             @RequestParam(required = false) List<UserStatus> status,
             @RequestParam(required = false) List<String> sortBy,
-            @RequestParam(required = false) List<SortOrder> sortByOrder,
+            @RequestParam(required = false) List<SortOrder> sortOrder,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int limit) {
 
-        return searchService.searchUser(keywords, limit, page, sortBy, sortByOrder, status);
+        return searchService.searchUser(keywords, limit, page, sortBy, sortOrder, status);
     }
 
     @GetMapping("/status")

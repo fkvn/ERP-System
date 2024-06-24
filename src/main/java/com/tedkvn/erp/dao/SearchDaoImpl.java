@@ -3,10 +3,9 @@ package com.tedkvn.erp.dao;
 
 import com.tedkvn.erp.entity.User;
 import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.rest.exception.BadRequest;
 import jakarta.persistence.EntityManager;
-import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.sort.dsl.FieldSortOptionsStep;
 import org.hibernate.search.engine.search.sort.dsl.SortOrder;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -24,8 +23,8 @@ public class SearchDaoImpl implements SearchDao {
     private EntityManager entityManager;
 
     @Override
-    public SearchResult<User> searchUser(String keywords, int limit, int page, String sortBy,
-                                         String sortByOrder, List<UserStatus> status) {
+    public SearchResult<User> searchUser(String keywords, int limit, int page, List<String> sortBy,
+                                         List<SortOrder> sortOrder, List<UserStatus> status) {
 
         SearchSession searchSession = Search.session(entityManager);
 
@@ -46,25 +45,25 @@ public class SearchDaoImpl implements SearchDao {
             b.filter(f.terms().field("status").matchingAny(finalStatus));
 
         })).sort(f -> f.composite(b -> {
-            FieldSortOptionsStep<?, ? extends SearchPredicateFactory> field = null;
-            switch (sortBy) {
-                case "createdOn": {
-                    field = f.field("createdOn").order(SortOrder.ASC).then().field();
-                    break;
-                }
-                case "updatedOn": {
-                    field = f.field("updatedOn");
-                    break;
-                }
-                default:
-                    break;
-            }
-            if (field != null) {
-                if (sortByOrder.equals("ascend")) field.order(SortOrder.ASC);
-                else field.order(SortOrder.DESC);
+            if (sortBy != null && sortOrder != null) {
+                for (int i = 0; i < sortBy.size(); i++) {
+                    String field = sortBy.get(i);
+                    SortOrder order = i < sortOrder.size() ? sortOrder.get(i) : SortOrder.DESC;
+                    try {
+                        b.add(f.field(field).order(order));
+                    } catch (Exception e) {
+                        throw new BadRequest(field + " is not sortable at the moment!");
+                    }
 
-                b.add(field);
+                }
             }
+            // stabilize the sort even further by adding a last sort on the id.
+            b.add(f.field("id").order(SortOrder.ASC));
+
         })).totalHitCountThreshold(500).fetch(limit * (page - 1), limit);
     }
+
+
 }
+
+
