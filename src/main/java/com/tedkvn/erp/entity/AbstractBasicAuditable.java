@@ -1,4 +1,4 @@
-package com.tedkvn.erp.audit;
+package com.tedkvn.erp.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tedkvn.erp.listener.BasicAuditListener;

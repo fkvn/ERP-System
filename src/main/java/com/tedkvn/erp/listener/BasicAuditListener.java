@@ -1,6 +1,6 @@
 package com.tedkvn.erp.listener;
 
-import com.tedkvn.erp.audit.AbstractBasicAuditable;
+import com.tedkvn.erp.entity.AbstractBasicAuditable;
 import com.tedkvn.erp.util.AuthUtil;
 import com.tedkvn.erp.util.BeanUtil;
 import jakarta.persistence.EntityManager;

@@ -1,10 +1,10 @@
 package com.tedkvn.erp.security;
 
-import com.tedkvn.erp.entity.User;
-import com.tedkvn.erp.entity.UserStatus;
 import com.tedkvn.erp.entity.organization.Company;
 import com.tedkvn.erp.entity.privilege.Role;
 import com.tedkvn.erp.entity.privilege.UserRole;
+import com.tedkvn.erp.entity.user.User;
+import com.tedkvn.erp.entity.user.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

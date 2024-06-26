@@ -1,7 +1,7 @@
-package com.tedkvn.erp.entity;
+package com.tedkvn.erp.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tedkvn.erp.audit.AbstractBasicAuditable;
+import com.tedkvn.erp.entity.AbstractBasicAuditable;
 import com.tedkvn.erp.entity.organization.Company;
 import com.tedkvn.erp.entity.privilege.UserRole;
 import com.tedkvn.erp.listener.UserListener;

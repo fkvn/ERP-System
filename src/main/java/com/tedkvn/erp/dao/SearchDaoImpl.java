@@ -1,8 +1,8 @@
 package com.tedkvn.erp.dao;
 
 
-import com.tedkvn.erp.entity.User;
-import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.entity.user.User;
+import com.tedkvn.erp.entity.user.UserStatus;
 import com.tedkvn.erp.rest.exception.BadRequest;
 import jakarta.persistence.EntityManager;
 import org.hibernate.search.engine.search.query.SearchResult;
@@ -54,13 +54,12 @@ public class SearchDaoImpl implements SearchDao {
                     } catch (Exception e) {
                         throw new BadRequest(field + " is not sortable at the moment!");
                     }
-
                 }
             }
             // stabilize the sort even further by adding a last sort on the id.
             b.add(f.field("id").order(SortOrder.ASC));
 
-        })).totalHitCountThreshold(500).fetch(limit * (page - 1), limit);
+        })).fetch(limit * (page - 1), limit);
     }
 
 

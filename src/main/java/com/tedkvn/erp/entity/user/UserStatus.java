@@ -1,4 +1,4 @@
-package com.tedkvn.erp.entity;
+package com.tedkvn.erp.entity.user;
 
 import lombok.Getter;
 

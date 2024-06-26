@@ -1,6 +1,6 @@
 package com.tedkvn.erp.entity.organization;
 
-import com.tedkvn.erp.audit.AbstractBasicAuditable;
+import com.tedkvn.erp.entity.AbstractBasicAuditable;
 import com.tedkvn.erp.entity.privilege.UserRole;
 import jakarta.persistence.*;
 import lombok.Getter;

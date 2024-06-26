@@ -1,7 +1,7 @@
 package com.tedkvn.erp.security;
 
-import com.tedkvn.erp.entity.User;
-import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.entity.user.User;
+import com.tedkvn.erp.entity.user.UserStatus;
 import com.tedkvn.erp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

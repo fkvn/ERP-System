@@ -1,7 +1,7 @@
 package com.tedkvn.erp.service.security;
 
-import com.tedkvn.erp.entity.User;
-import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.entity.user.User;
+import com.tedkvn.erp.entity.user.UserStatus;
 import com.tedkvn.erp.rest.exception.BadRequest;
 import com.tedkvn.erp.rest.exception.ResourceNotFoundException;
 import com.tedkvn.erp.rest.request.SignInByPassword;

@@ -1,6 +1,6 @@
 package com.tedkvn.erp.service.security;
 
-import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.user.User;
 import com.tedkvn.erp.rest.request.SignInByPassword;
 import com.tedkvn.erp.rest.request.SignUpRequest;
 import com.tedkvn.erp.rest.response.JwtResponse;

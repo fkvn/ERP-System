@@ -1,8 +1,8 @@
 package com.tedkvn.erp.dao;
 
 
-import com.tedkvn.erp.entity.User;
-import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.entity.user.User;
+import com.tedkvn.erp.entity.user.UserStatus;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.engine.search.sort.dsl.SortOrder;
 

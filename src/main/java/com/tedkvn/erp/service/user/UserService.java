@@ -1,6 +1,6 @@
 package com.tedkvn.erp.service.user;
 
-import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.user.User;
 
 import java.util.List;
 import java.util.Optional;

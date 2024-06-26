@@ -1,7 +1,7 @@
 package com.tedkvn.erp.listener;
 
 import com.tedkvn.erp.config.AbstractInitSequenceBuild;
-import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.user.User;
 import com.tedkvn.erp.util.DbUtil;
 import jakarta.persistence.PrePersist;
 import lombok.extern.slf4j.Slf4j;

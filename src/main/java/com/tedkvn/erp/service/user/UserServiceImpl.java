@@ -1,6 +1,6 @@
 package com.tedkvn.erp.service.user;
 
-import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.user.User;
 import com.tedkvn.erp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

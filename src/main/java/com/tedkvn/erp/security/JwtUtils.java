@@ -1,6 +1,6 @@
 package com.tedkvn.erp.security;
 
-import com.tedkvn.erp.entity.User;
+import com.tedkvn.erp.entity.user.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

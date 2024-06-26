@@ -1,7 +1,7 @@
 package com.tedkvn.erp.rest.controller;
 
 import com.tedkvn.erp.annotation.IsSuperAdmin;
-import com.tedkvn.erp.entity.UserStatus;
+import com.tedkvn.erp.entity.user.UserStatus;
 import com.tedkvn.erp.repository.UserRepository;
 import com.tedkvn.erp.rest.response.SearchResponse;
 import com.tedkvn.erp.service.search.SearchService;
@@ -46,6 +46,4 @@ public class UserController {
     public List<UserStatus> findUserStatusAll() {
         return List.of(UserStatus.class.getEnumConstants());
     }
-
-
 }
